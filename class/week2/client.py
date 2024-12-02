@@ -7,11 +7,6 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 s.connect(("localhost", PORT))
 
-while s.recv(4096).decode() != "ready":
-  print("Waiting for another player...")
-print("Other player has joined the room.")
-print("Game started!")
-
 choices_pool = ["rock", "paper", "scissor"]
 
 while True:
@@ -32,10 +27,6 @@ while True:
 
 s.send(str(choices_pool[int(player_action)-1]).encode())
 print("Opponent is thinking...")
-data = s.recv(4096).decode()
-if data != "finish":
-  s.close()
-  raise Exception("Invalid game logic order.")
 data = s.recv(4096).decode()
 if data == "draw":
   print("Draw.")
